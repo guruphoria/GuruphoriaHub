@@ -2,52 +2,12 @@
 [
   {
     "id": "1",
-    "title": "Introduction to Web Development",
-    "description": "Master the fundamentals of web development. This course covers HTML, CSS, and JavaScript from the ground up, empowering you to build your first interactive websites.",
-    "instructor": "Alex Johnson",
-    "duration": "8h 15m",
-    "tags": ["HTML", "CSS", "JavaScript", "Beginner"],
-    "videoUrl": "https://www.youtube.com/embed/g-s-g6u_1g8",
-    "thumbnailUrlId": "course-thumb-1"
-  },
-  {
-    "id": "2",
-    "title": "Data Science with Python",
-    "description": "Dive into the world of data science. Learn to analyze data, create beautiful visualizations, and build predictive models using popular Python libraries like Pandas and Scikit-learn.",
-    "instructor": "Maria Garcia",
-    "duration": "12h 45m",
-    "tags": ["Python", "Data Analysis", "Machine Learning"],
-    "videoUrl": "https://www.youtube.com/embed/LHBE6Q9XlzI",
-    "thumbnailUrlId": "course-thumb-2"
-  },
-  {
-    "id": "3",
-    "title": "Digital Marketing Essentials",
-    "description": "Learn the core strategies of digital marketing. This course covers SEO, content marketing, social media, and analytics to help you grow your online presence.",
-    "instructor": "Chris Lee",
-    "duration": "6h 30m",
-    "tags": ["SEO", "Social Media", "Marketing"],
-    "videoUrl": "https://www.youtube.com/embed/d3M-NmmR3c4",
-    "thumbnailUrlId": "course-thumb-3"
-  },
-  {
-    "id": "4",
-    "title": "UX Design: From Wireframe to Prototype",
-    "description": "Understand the principles of user experience design. Learn how to conduct user research, create wireframes, and build interactive prototypes for web and mobile apps.",
-    "instructor": "Samantha Bee",
-    "duration": "10h 0m",
-    "tags": ["UX Design", "Prototyping", "Figma"],
-    "videoUrl": "https://www.youtube.com/embed/cKZEgtadw2I",
-    "thumbnailUrlId": "course-thumb-4"
-  },
-  {
-    "id": "5",
-    "title": "Agile Project Management",
-    "description": "Master the Agile and Scrum frameworks for effective project management. Learn to lead teams, manage backlogs, and deliver value to stakeholders efficiently.",
-    "instructor": "David Chen",
-    "duration": "7h 20m",
-    "tags": ["Agile", "Scrum", "Management"],
-    "videoUrl": "https://www.youtube.com/embed/Z9l5gke92T8",
-    "thumbnailUrlId": "course-thumb-5"
+    "title": "Wordpress Website Web Development Course",
+    "description": "A comprehensive, full-length course on building a professional Wordpress website from scratch. Learn everything from setup to advanced customization.",
+    "instructor": "Tech Guru",
+    "duration": "11h 52m",
+    "tags": ["WordPress", "Web Development", "No-Code", "Beginner"],
+    "videoUrl": "https://www.youtube.com/embed/26yRSe_ez4M",
+    "thumbnailUrlId": "course-thumb-wordpress"
   }
 ]
