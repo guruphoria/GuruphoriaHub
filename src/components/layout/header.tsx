@@ -18,6 +18,13 @@ export function Header() {
           >
             Courses
           </Link>
+          <Link
+            href="/about"
+            className="text-foreground/60 transition-colors hover:text-foreground/80"
+            prefetch={false}
+          >
+            About
+          </Link>
         </nav>
         <div className="flex items-center gap-4">
           <Button variant="outline">Sign In</Button>
