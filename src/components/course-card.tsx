@@ -19,20 +19,23 @@ interface CourseCardProps {
 }
 
 export function CourseCard({ course }: CourseCardProps) {
-  const thumbnail = getPlaceholderImage(course.thumbnailUrlId);
+  const placeholderThumbnail = getPlaceholderImage('course-thumbnail-placeholder');
+  
+  const thumbnailUrl = course.thumbnailUrl || placeholderThumbnail?.imageUrl;
+  const thumbnailAlt = course.title || 'Course thumbnail';
 
   return (
     <Card className="flex flex-col h-full overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl">
       <CardHeader className="p-0">
         <Link href={`/courses/${course.id}`} className="block">
-          {thumbnail && (
+          {thumbnailUrl && (
             <Image
-              src={thumbnail.imageUrl}
-              alt={thumbnail.description}
-              data-ai-hint={thumbnail.imageHint}
+              src={thumbnailUrl}
+              alt={thumbnailAlt}
               width={600}
               height={400}
               className="aspect-video w-full object-cover"
+              data-ai-hint="course thumbnail"
             />
           )}
         </Link>
@@ -43,7 +46,7 @@ export function CourseCard({ course }: CourseCardProps) {
             {course.title}
           </Link>
         </CardTitle>
-        <CardDescription>{course.description}</CardDescription>
+        <CardDescription className="line-clamp-3">{course.description}</CardDescription>
       </CardContent>
       <CardFooter className="p-6 pt-0 flex flex-col items-start gap-4">
         <div className="flex items-center text-sm text-muted-foreground">

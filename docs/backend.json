@@ -1,15 +1,31 @@
 {
   "entities": {
+    "User": {
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user in the system.",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The user's unique identifier."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The user's email address."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The user's display name."
+        }
+      },
+      "required": ["uid", "email"]
+    },
     "Course": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Course",
       "type": "object",
       "description": "Represents a course in the Guruphoria platform.",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the Course entity."
-        },
         "title": {
           "type": "string",
           "description": "The title of the course."
@@ -18,19 +34,13 @@
           "type": "string",
           "description": "A detailed description of the course content."
         },
-        "thumbnailUrl": {
-          "type": "string",
-          "description": "URL of the course thumbnail image.",
-          "format": "uri"
+        "instructor": {
+            "type": "string",
+            "description": "Name of the instructor for this course."
         },
-        "videoUrl": {
-          "type": "string",
-          "description": "URL of the main video for the course (e.g., YouTube link).",
-          "format": "uri"
-        },
-        "length": {
-          "type": "number",
-          "description": "The length of the video in minutes."
+        "duration": {
+            "type": "string",
+            "description": "The length of the video (e.g., '1h 30m')."
         },
         "tags": {
           "type": "array",
@@ -39,31 +49,45 @@
             "type": "string"
           }
         },
-        "instructor": {
+        "videoUrl": {
+            "type": "string",
+            "description": "URL of the main video for the course (e.g., YouTube link).",
+            "format": "uri"
+        },
+        "thumbnailUrl": {
           "type": "string",
-          "description": "Name of the instructor for this course"
+          "description": "URL of the course thumbnail image.",
+          "format": "uri"
         }
       },
       "required": [
-        "id",
         "title",
         "description",
-        "thumbnailUrl",
-        "videoUrl",
-        "length",
+        "instructor",
+        "duration",
         "tags",
-        "instructor"
+        "videoUrl",
+        "thumbnailUrl"
       ]
     }
   },
   "auth": {
     "providers": [
-      "password",
-      "anonymous"
+      "password"
     ]
   },
   "firestore": {
     "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profile information."
+        }
+      },
       {
         "path": "/courses/{courseId}",
         "definition": {
@@ -71,16 +95,9 @@
           "schema": {
             "$ref": "#/backend/entities/Course"
           },
-          "description": "Stores course details including title, description, thumbnail URL, video URL, length, tags, and instructor.",
-          "params": [
-            {
-              "name": "courseId",
-              "description": "Unique identifier for the course."
-            }
-          ]
+          "description": "Stores all course documents."
         }
       }
-    ],
-    "reasoning": "The data structure is designed to store course information for the Guruphoria platform. It includes a single collection, `courses`, which stores all course documents. This structure is straightforward and efficient for retrieving course data for display on the landing page, course listing, and video player. \n\nThis design achieves Authorization Independence as there are no subcollections or nested data structures requiring complex authorization rules.  All documents within the `courses` collection share the same security posture. Since this application has a simple admin dashboard and does not have the user owned data, the DBAC is not applied."
+    ]
   }
 }

@@ -1,16 +1,42 @@
-import { notFound } from 'next/navigation';
-import { getCourseById } from '@/lib/courses';
+'use client';
+import { notFound, useParams } from 'next/navigation';
+import { useDoc, useFirestore, useMemoFirebase } from '@/firebase';
+import type { Course } from '@/lib/types';
+import { doc } from 'firebase/firestore';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Clock, GraduationCap, Tag } from 'lucide-react';
+import { Clock, GraduationCap, Tag, Loader2 } from 'lucide-react';
 import { Recommendations } from '@/components/ai/recommendations';
 
-export default function CoursePage({ params }: { params: { courseId: string } }) {
-  const course = getCourseById(params.courseId);
+export default function CoursePage() {
+  const params = useParams();
+  const courseId = params.courseId as string;
+  const firestore = useFirestore();
 
-  if (!course) {
+  const courseRef = useMemoFirebase(() => {
+      if (!firestore || !courseId) return null;
+      return doc(firestore, 'courses', courseId);
+  }, [firestore, courseId]);
+
+  const { data: course, isLoading, error } = useDoc<Course>(courseRef);
+
+  if (isLoading) {
+    return (
+        <div className="container max-w-4xl mx-auto px-4 py-12">
+            <div className="flex items-center justify-center h-96">
+                <Loader2 className="h-12 w-12 animate-spin text-primary" />
+            </div>
+        </div>
+    );
+  }
+
+  if (!course && !isLoading) {
     notFound();
   }
+
+  if(!course) return null;
+
+  const embedUrl = course.videoUrl.replace("watch?v=", "embed/");
 
   return (
     <div className="container max-w-4xl mx-auto px-4 py-12">
@@ -32,7 +58,7 @@ export default function CoursePage({ params }: { params: { courseId: string } })
         <div className="aspect-video w-full overflow-hidden rounded-lg shadow-lg">
           <iframe
             className="w-full h-full"
-            src={course.videoUrl}
+            src={embedUrl}
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen

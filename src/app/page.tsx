@@ -1,15 +1,25 @@
+'use client'
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { CourseCard } from '@/components/course-card';
-import { getAllCourses } from '@/lib/courses';
 import { getPlaceholderImage } from '@/lib/placeholder-images';
 import { ArrowRight, BookOpenText, Target } from 'lucide-react';
+import { useCollection, useFirestore, useMemoFirebase } from '@/firebase';
+import { collection, query, limit } from 'firebase/firestore';
+import type { Course } from '@/lib/types';
 
 export default function Home() {
-  const featuredCourses = getAllCourses().slice(0, 3);
+  const firestore = useFirestore();
   const heroImage = getPlaceholderImage('hero-image');
+
+  const featuredCoursesQuery = useMemoFirebase(() => {
+    if (!firestore) return null;
+    return query(collection(firestore, 'courses'), limit(3));
+  }, [firestore]);
+
+  const { data: featuredCourses, isLoading } = useCollection<Course>(featuredCoursesQuery);
 
   return (
     <div className="flex flex-col">
@@ -83,7 +93,20 @@ export default function Home() {
             <p className="text-lg text-muted-foreground mt-2">Get a glimpse of what our platform has to offer.</p>
           </div>
           <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredCourses.map((course) => (
+            {isLoading && Array.from({ length: 3 }).map((_, i) => (
+                <Card key={i} className="flex flex-col h-full overflow-hidden">
+                    <div className="aspect-video w-full bg-muted animate-pulse"></div>
+                    <div className="p-6 flex-grow space-y-4">
+                        <div className="h-6 w-3/4 bg-muted animate-pulse rounded"></div>
+                        <div className="h-4 w-full bg-muted animate-pulse rounded"></div>
+                        <div className="h-4 w-1/2 bg-muted animate-pulse rounded"></div>
+                    </div>
+                    <div className="p-6 pt-0">
+                         <div className="h-10 w-full bg-muted animate-pulse rounded"></div>
+                    </div>
+                </Card>
+            ))}
+            {featuredCourses?.map((course) => (
               <CourseCard key={course.id} course={course} />
             ))}
           </div>
