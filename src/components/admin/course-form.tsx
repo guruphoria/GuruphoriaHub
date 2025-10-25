@@ -169,6 +169,9 @@ export function CourseForm({ onSubmit, initialData }: CourseFormProps) {
               <FormControl>
                 <Input placeholder="https://example.com/image.png" {...field} />
               </FormControl>
+              <FormDescription>
+                You can host your images on a free service like Imgur and then paste the image URL into the "Video Thumbnail Image URL" field.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
