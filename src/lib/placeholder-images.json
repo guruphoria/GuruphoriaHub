@@ -1,6 +1,12 @@
 {
   "placeholderImages": [
     {
+      "id": "brand-hero",
+      "description": "Premium brand hero image for Guruphoria showing AI and software engineering themes",
+      "imageUrl": "https://picsum.photos/seed/guruphoria-hero/800/800",
+      "imageHint": "futuristic technology"
+    },
+    {
       "id": "hero-developer",
       "description": "Premium portrait of a developer with futuristic AI overlays",
       "imageUrl": "https://picsum.photos/seed/guruhero/800/800",
@@ -26,9 +32,33 @@
     },
     {
       "id": "video-nextjs-ai",
-      "description": "Next.js and AI tutorial thumbnail",
+      "description": "Next.js and AI tutorial tutorial thumbnail",
       "imageUrl": "https://picsum.photos/seed/nextai/600/400",
       "imageHint": "coding tutorial"
+    },
+    {
+      "id": "course-thumbnail-placeholder",
+      "description": "Default placeholder for course thumbnails",
+      "imageUrl": "https://picsum.photos/seed/course-default/600/400",
+      "imageHint": "technology education"
+    },
+    {
+      "id": "team-member-1",
+      "description": "Avatar for Alex Johnson",
+      "imageUrl": "https://picsum.photos/seed/alex/200/200",
+      "imageHint": "professional man"
+    },
+    {
+      "id": "team-member-2",
+      "description": "Avatar for Maria Garcia",
+      "imageUrl": "https://picsum.photos/seed/maria/200/200",
+      "imageHint": "professional woman"
+    },
+    {
+      "id": "team-member-3",
+      "description": "Avatar for Chris Lee",
+      "imageUrl": "https://picsum.photos/seed/chris/200/200",
+      "imageHint": "professional person"
     }
   ]
 }
