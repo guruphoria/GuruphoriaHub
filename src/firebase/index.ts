@@ -1,35 +1,32 @@
 import { firebaseConfig } from '@/firebase/config';
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore'
+import { getFirestore } from 'firebase/firestore';
 
 /**
  * @fileOverview Universal Firebase initialization.
- * Removed 'use client' to allow use in both Client Components and Server Components (SSR/Static Generation).
+ * Robust implementation for both Client and Server environments.
  */
 
 export function initializeFirebase() {
+  let app: FirebaseApp;
+  
   if (!getApps().length) {
-    let firebaseApp;
     try {
-      // Attempt to initialize via Firebase App Hosting environment variables
-      firebaseApp = initializeApp();
+      // Attempt to initialize via Firebase App Hosting environment variables (preferred in production)
+      app = initializeApp();
     } catch (e) {
-      // Fallback to config object for local development or non-hosting environments
-      firebaseApp = initializeApp(firebaseConfig);
+      // Fallback to config object for local development
+      app = initializeApp(firebaseConfig);
     }
-
-    return getSdks(firebaseApp);
+  } else {
+    app = getApp();
   }
 
-  return getSdks(getApp());
-}
-
-export function getSdks(firebaseApp: FirebaseApp) {
   return {
-    firebaseApp,
-    auth: getAuth(firebaseApp),
-    firestore: getFirestore(firebaseApp)
+    firebaseApp: app,
+    auth: getAuth(app),
+    firestore: getFirestore(app)
   };
 }
 

@@ -19,16 +19,14 @@ import { notFound } from 'next/navigation';
 /**
  * @fileOverview The course viewer page.
  * Uses generateStaticParams to pre-build course pages for performance and SEO.
- * This satisfies the 'output: export' requirement in next.config.ts.
  */
 
 export async function generateStaticParams() {
   try {
     const { firestore } = initializeFirebase();
-    if (!firestore) return [];
-    
     const coursesCol = collection(firestore, 'courses');
     const coursesSnapshot = await getDocs(coursesCol);
+    
     return coursesSnapshot.docs.map(doc => ({
       courseId: doc.id,
     }));
@@ -41,10 +39,9 @@ export async function generateStaticParams() {
 async function getCourse(id: string) {
   try {
     const { firestore } = initializeFirebase();
-    if (!firestore) return null;
-    
     const courseRef = doc(firestore, 'courses', id);
     const courseSnap = await getDoc(courseRef);
+    
     if (!courseSnap.exists()) return null;
     return { ...courseSnap.data(), id: courseSnap.id } as Course;
   } catch (error) {
@@ -66,7 +63,9 @@ export default async function CoursePage({ params }: PageProps) {
   }
 
   const videoUrl = course.videoUrl || '';
-  const videoId = videoUrl.split('v=')[1]?.split('&')[0] || videoUrl.split('/').pop() || '';
+  const videoId = videoUrl.includes('v=') 
+    ? videoUrl.split('v=')[1]?.split('&')[0] 
+    : videoUrl.split('/').pop() || '';
   const embedUrl = `https://www.youtube.com/embed/${videoId}`;
 
   return (
