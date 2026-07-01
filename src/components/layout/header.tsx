@@ -37,7 +37,7 @@ export function Header() {
             <Link href="/" className="hover:text-primary transition-colors">Home</Link>
             <Link href="/explore" className="hover:text-primary transition-colors">Explore</Link>
             <Link href="/courses" className="hover:text-primary transition-colors">Learn</Link>
-            <Link href="#" className="hover:text-primary transition-colors">Projects</Link>
+            <Link href="/projects" className="hover:text-primary transition-colors">Projects</Link>
             <Link href="/about" className="hover:text-primary transition-colors">About</Link>
           </nav>
         </div>
