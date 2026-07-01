@@ -1,22 +1,23 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { GraduationCap, Github, Youtube, Newspaper, Search, Menu } from 'lucide-react';
+import { Github, Youtube, Newspaper, Search, Menu } from 'lucide-react';
 import { useUser } from '@/firebase';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { GuruphoriaLogo } from './logo';
 
 export function Header() {
-  const { user, isUserLoading } = useUser();
+  const { user } = useUser();
 
   return (
     <header className="bg-background/80 sticky top-0 z-50 w-full border-b border-white/5 backdrop-blur-md">
       <div className="container mx-auto flex h-20 items-center justify-between px-6">
         <div className="flex items-center gap-10">
           <Link href="/" className="flex items-center gap-2 group" prefetch={false}>
-            <div className="bg-primary/20 p-1.5 rounded-lg group-hover:bg-primary/30 transition-colors">
-              <GraduationCap className="h-6 w-6 text-primary" />
+            <div className="bg-primary/20 p-1 rounded-lg group-hover:bg-primary/30 transition-colors">
+              <GuruphoriaLogo className="h-10 w-10 text-primary" />
             </div>
-            <span className="text-xl font-headline font-bold tracking-tight">Guruphoria</span>
+            <span className="text-xl font-headline font-bold tracking-tight uppercase">Guruphoria</span>
           </Link>
           
           <nav className="hidden items-center gap-8 text-sm font-medium lg:flex text-muted-foreground">
