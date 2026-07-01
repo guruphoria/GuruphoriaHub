@@ -31,6 +31,7 @@ export interface MediumArticle {
   publishedAt: string;
   url: string;
   category: string;
+  tags: string[];
 }
 
 export interface GitHubRepository {

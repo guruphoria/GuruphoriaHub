@@ -27,11 +27,12 @@ export async function fetchLatestArticles(limit = 4): Promise<MediumArticle[]> {
         id: item.guid || item.link,
         title: item.title,
         summary: cleanSummary,
-        coverImage: item.thumbnail || `https://picsum.photos/seed/${item.guid.split('/').pop()}/600/400`,
-        readingTime: '8 min', // Medium RSS doesn't provide this, so we default to a realistic average
+        coverImage: item.thumbnail || `https://picsum.photos/seed/${item.guid.split('/').pop() || 'medium'}/600/400`,
+        readingTime: '8 min',
         publishedAt: new Date(item.pubDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
         url: item.link,
-        category: item.categories?.[0] || 'AI & Engineering',
+        category: item.categories?.[0] || 'Engineering',
+        tags: item.categories || ['Technology', 'AI', 'Software Engineering']
       };
     });
   } catch (error) {
@@ -48,6 +49,7 @@ export async function fetchLatestArticles(limit = 4): Promise<MediumArticle[]> {
       publishedAt: i === 0 ? "Oct 24" : "Oct 12",
       url: "https://puneetshivaay.medium.com/",
       category: i % 2 === 0 ? "AI Trends" : "Web Dev",
+      tags: ['AI', 'Next.js', 'Engineering', 'Architecture']
     }));
   }
 }

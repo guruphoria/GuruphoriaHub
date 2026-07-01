@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
+import { fetchLatestArticles } from '@/lib/medium';
+import type { MediumArticle } from '@/lib/types';
 import { 
   Search, 
   Download, 
@@ -41,6 +43,17 @@ export default function ResourcesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const { toast } = useToast();
   const [copiedPrompt, setCopiedPrompt] = useState<string | null>(null);
+  const [articles, setArticles] = useState<MediumArticle[]>([]);
+  const [isLoadingArticles, setIsLoadingArticles] = useState(true);
+
+  useEffect(() => {
+    async function loadArticles() {
+      const latestArticles = await fetchLatestArticles(3);
+      setArticles(latestArticles);
+      setIsLoadingArticles(false);
+    }
+    loadArticles();
+  }, []);
 
   const filterChips = [
     "AI", "React", "Firebase", "Python", "System Design", "Interview", "Resume", "Automation", "Cloud", "Prompt Engineering"
@@ -263,8 +276,63 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      {/* Interview Prep */}
+      {/* Latest Articles */}
       <section className="py-24 px-6 bg-[#101828]/20">
+        <div className="container mx-auto">
+          <div className="flex justify-between items-end mb-12">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold">Latest Technical Guides</h2>
+              <p className="text-muted-foreground">Deep dive articles from our Medium engineering blog.</p>
+            </div>
+            <Button variant="ghost" className="hover:text-primary group" asChild>
+              <Link href="https://puneetshivaay.medium.com/" target="_blank">
+                View Medium <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </Button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {isLoadingArticles ? (
+              Array.from({ length: 3 }).map((_, i) => (
+                <Card key={i} className="glass overflow-hidden bg-[#101828]/50 border-white/5 animate-pulse">
+                  <div className="aspect-video bg-white/5" />
+                  <div className="p-6 space-y-4">
+                    <div className="h-6 bg-white/5 rounded w-3/4" />
+                    <div className="h-4 bg-white/5 rounded w-full" />
+                  </div>
+                </Card>
+              ))
+            ) : (
+              articles.map((art) => (
+                <Card key={art.id} className="glass overflow-hidden group bg-[#101828]/50 border-white/5 hover:border-primary/30 transition-all">
+                  <div className="relative aspect-video">
+                    <Image 
+                      src={art.coverImage} 
+                      alt={art.title} 
+                      fill 
+                      className="object-cover group-hover:scale-105 transition-all duration-500"
+                      data-ai-hint="blog cover"
+                    />
+                    <Badge className="absolute top-4 left-4 bg-primary/20 text-primary border-none text-[10px]">{art.category}</Badge>
+                  </div>
+                  <div className="p-6 space-y-4 flex flex-col h-full">
+                    <h4 className="font-bold text-lg group-hover:text-primary transition-colors line-clamp-2">{art.title}</h4>
+                    <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">{art.summary}</p>
+                    <div className="mt-auto flex items-center justify-between pt-4">
+                      <span className="text-[10px] text-muted-foreground">{art.publishedAt} • {art.readingTime}</span>
+                      <Button variant="link" className="p-0 h-auto text-primary text-xs" asChild>
+                        <Link href={art.url} target="_blank">Read More</Link>
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              ))
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Interview Prep */}
+      <section className="py-24 px-6">
         <div className="container mx-auto">
           <div className="mb-12">
             <h2 className="text-3xl font-bold mb-4">Ace Your Next Interview</h2>
@@ -288,7 +356,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* Roadmaps */}
-      <section className="py-24 px-6">
+      <section className="py-24 px-6 bg-[#101828]/30">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold mb-12">Learning Roadmaps</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -314,115 +382,6 @@ export default function ResourcesPage() {
                 <Button className="w-full bg-primary hover:bg-primary/90 rounded-full font-bold">
                   Start Roadmap
                 </Button>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Starters */}
-      <section className="py-24 px-6 bg-[#101828]/30">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold mb-12">Templates & Starter Kits</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {starters.map((kit, idx) => (
-              <Card key={idx} className="glass overflow-hidden group bg-[#101828]/50 border-white/5 flex flex-col">
-                <div className="relative aspect-video">
-                  <Image 
-                    src={`https://picsum.photos/seed/starter-${idx}/600/400`} 
-                    alt={kit.title} 
-                    fill 
-                    className="object-cover grayscale-[50%] group-hover:grayscale-0 transition-all duration-500"
-                    data-ai-hint="template screenshot"
-                  />
-                  <Badge className="absolute bottom-4 left-4 bg-black/60 border-white/10">{kit.tech}</Badge>
-                </div>
-                <div className="p-8 flex-grow space-y-4">
-                  <h4 className="text-2xl font-bold group-hover:text-primary transition-colors">{kit.title}</h4>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{kit.desc}</p>
-                </div>
-                <div className="p-8 pt-0 flex gap-3">
-                  <Button variant="outline" size="sm" className="flex-1 glass border-white/10 rounded-full">Preview</Button>
-                  <Button size="sm" className="flex-1 bg-primary/20 text-primary border border-primary/20 rounded-full">Download</Button>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Recommended Tools */}
-      <section className="py-24 px-6">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-16">Recommended Tools</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {["Firebase", "Gemini", "VS Code", "GitHub", "Postman", "Docker", "Figma", "Cursor AI", "Vercel", "Netlify"].map((tool) => (
-              <Card key={tool} className="glass p-6 flex flex-col items-center justify-center gap-3 group hover:border-primary/50 transition-all cursor-pointer bg-[#101828]/50 border-white/5">
-                <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <ExternalLink className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                </div>
-                <div className="font-bold text-xs">{tool}</div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Resource of the Week */}
-      <section className="py-24 px-6">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold mb-12">Resource of the Week</h2>
-          <Card className="glass overflow-hidden bg-gradient-to-br from-primary/10 to-transparent border-primary/20 relative">
-            <div className="grid lg:grid-cols-2 items-center">
-              <div className="relative aspect-video lg:h-full">
-                <Image 
-                  src="https://picsum.photos/seed/rotw/1000/800" 
-                  alt="Spotlight" 
-                  fill 
-                  className="object-cover"
-                  data-ai-hint="spotlight document"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#050816] hidden lg:block"></div>
-              </div>
-              <div className="p-12 space-y-8 relative z-10">
-                <Badge className="bg-primary/20 text-primary border-none">EDITOR'S CHOICE</Badge>
-                <div className="space-y-4">
-                  <h3 className="text-4xl font-bold">The Ultimate Agentic AI Handbook</h3>
-                  <p className="text-muted-foreground leading-relaxed">A 150-page deep dive into building autonomous agents with Gemini 1.5, Genkit, and modern RAG architectures. Includes full source code for 10 real-world agents.</p>
-                </div>
-                <div className="flex flex-wrap gap-4 pt-4">
-                  <Button className="bg-primary hover:bg-primary/90 rounded-full px-8 text-lg font-bold">
-                    <Download className="mr-2 h-5 w-5" /> Download Handbook
-                  </Button>
-                  <Button variant="outline" className="rounded-full px-8 glass border-white/10 text-lg font-bold">
-                    Read Preview
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </section>
-
-      {/* Community Resources */}
-      <section className="py-24 px-6 bg-[#101828]/40">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold mb-12">Community Collections</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { title: "YouTube Playlists", icon: <Youtube />, link: "#", desc: "Curated tutorial paths." },
-              { title: "Medium Articles", icon: <Newspaper />, link: "#", desc: "Weekly tech insights." },
-              { title: "GitHub Repos", icon: <Github />, link: "#", desc: "Open-source projects." },
-              { title: "Learning Packs", icon: <BookOpen />, link: "#", desc: "Themed resource bundles." },
-            ].map((res, idx) => (
-              <Card key={idx} className="glass p-6 group hover:bg-white/5 transition-all border-white/5 cursor-pointer flex items-center gap-4">
-                <div className="bg-primary/10 w-12 h-12 rounded-xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                  {res.icon}
-                </div>
-                <div>
-                  <h5 className="font-bold text-sm">{res.title}</h5>
-                  <p className="text-[10px] text-muted-foreground">{res.desc}</p>
-                </div>
               </Card>
             ))}
           </div>
