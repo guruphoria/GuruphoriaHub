@@ -66,18 +66,18 @@ export function Footer() {
                   <GuruphoriaLogo className="h-10 w-10 text-primary" />
                 )}
               </div>
-              <span className="text-2xl font-headline font-extrabold tracking-tighter uppercase">Guruphoria</span>
+              <span className="text-2xl font-headline font-extrabold tracking-tighter uppercase text-white">Guruphoria</span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs font-medium">
               Empowering the next generation of engineers through elite, project-based AI and Software Engineering education.
             </p>
             <div className="flex gap-5">
               {[
-                { icon: <Github />, href: 'https://github.com/PuneetShivaay', label: 'GitHub' },
-                { icon: <Youtube />, href: 'https://www.youtube.com/@guruphoria', label: 'YouTube' },
-                { icon: <Newspaper />, href: 'https://puneetshivaay.medium.com/', label: 'Medium' },
-                { icon: <Linkedin />, href: 'https://in.linkedin.com/company/guruphoria', label: 'LinkedIn' },
-                { icon: <Twitter />, href: '#', label: 'Twitter' },
+                { icon: <Github className="w-5 h-5" />, href: 'https://github.com/PuneetShivaay', label: 'GitHub' },
+                { icon: <Youtube className="w-5 h-5" />, href: 'https://www.youtube.com/@guruphoria', label: 'YouTube' },
+                { icon: <Newspaper className="w-5 h-5" />, href: 'https://puneetshivaay.medium.com/', label: 'Medium' },
+                { icon: <Linkedin className="w-5 h-5" />, href: 'https://in.linkedin.com/company/guruphoria', label: 'LinkedIn' },
+                { icon: <Twitter className="w-5 h-5" />, href: '#', label: 'Twitter' },
               ].map((social) => (
                 <Link 
                   key={social.label}
@@ -87,7 +87,7 @@ export function Footer() {
                   aria-label={social.label}
                   className="text-muted-foreground hover:text-primary hover:scale-110 transition-all duration-300"
                 >
-                  <span className="[&>svg]:w-5 [&>svg]:h-5">{social.icon}</span>
+                  {social.icon}
                 </Link>
               ))}
             </div>
@@ -136,7 +136,7 @@ export function Footer() {
                 <input 
                   type="email" 
                   placeholder="Email" 
-                  className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs w-full focus:border-primary outline-none transition-colors"
+                  className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs w-full focus:border-primary outline-none transition-colors text-white"
                 />
                 <button className="bg-primary text-white p-2 rounded-lg hover:scale-105 transition-transform">
                   <ChevronRight className="h-4 w-4" />

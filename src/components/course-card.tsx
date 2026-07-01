@@ -27,7 +27,7 @@ export function CourseCard({ course }: CourseCardProps) {
   return (
     <Card className="flex flex-col h-full overflow-hidden transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl">
       <CardHeader className="p-0">
-        <Link href={`/courses/view?id=${course.id}`} className="block">
+        <Link href={`/courses/${course.id}`} className="block">
           {thumbnailUrl && (
             <Image
               src={thumbnailUrl}
@@ -42,7 +42,7 @@ export function CourseCard({ course }: CourseCardProps) {
       </CardHeader>
       <CardContent className="p-6 flex-grow">
         <CardTitle className="font-headline text-xl mb-2">
-          <Link href={`/courses/view?id=${course.id}`} className="hover:text-primary transition-colors">
+          <Link href={`/courses/${course.id}`} className="hover:text-primary transition-colors">
             {course.title}
           </Link>
         </CardTitle>
@@ -59,7 +59,7 @@ export function CourseCard({ course }: CourseCardProps) {
             ))}
         </div>
         <Button asChild className="w-full mt-2 bg-primary hover:bg-primary/90">
-          <Link href={`/courses/view?id=${course.id}`}>
+          <Link href={`/courses/${course.id}`}>
             <PlayCircle className="mr-2 h-4 w-4" /> Watch Now
           </Link>
         </Button>

@@ -4,9 +4,7 @@ import {
     getDocs,
     doc,
     getDoc,
-    query,
     Firestore,
-    DocumentData,
   } from 'firebase/firestore';
   
   export async function getAllCourses(db: Firestore): Promise<Course[]> {
@@ -32,4 +30,12 @@ import {
       return undefined;
     }
   }
-  
+
+  /**
+   * Fetches only the IDs of all courses. Useful for generateStaticParams.
+   */
+  export async function getAllCourseIds(db: Firestore): Promise<string[]> {
+    const coursesCol = collection(db, 'courses');
+    const coursesSnapshot = await getDocs(coursesCol);
+    return coursesSnapshot.docs.map(doc => doc.id);
+  }
