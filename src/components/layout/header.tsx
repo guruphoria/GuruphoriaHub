@@ -1,32 +1,46 @@
+
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Github, Youtube, Newspaper, Search, Menu } from 'lucide-react';
 import { useUser } from '@/firebase';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { GuruphoriaLogo } from './logo';
+import { getPlaceholderImage } from '@/lib/placeholder-images';
 
 export function Header() {
   const { user } = useUser();
+  const brandLogo = getPlaceholderImage('brand-logo');
 
   return (
     <header className="bg-background/80 sticky top-0 z-50 w-full border-b border-white/5 backdrop-blur-md">
       <div className="container mx-auto flex h-20 items-center justify-between px-6">
         <div className="flex items-center gap-10">
           <Link href="/" className="flex items-center gap-2 group" prefetch={false}>
-            <div className="bg-primary/20 p-1 rounded-lg group-hover:bg-primary/30 transition-colors">
-              <GuruphoriaLogo className="h-10 w-10 text-primary" />
+            <div className="bg-primary/20 p-1 rounded-lg group-hover:bg-primary/30 transition-colors overflow-hidden">
+              {brandLogo ? (
+                <Image 
+                  src={brandLogo.imageUrl} 
+                  alt="Guruphoria" 
+                  width={40} 
+                  height={40} 
+                  className="h-10 w-10 object-contain rounded"
+                />
+              ) : (
+                <GuruphoriaLogo className="h-10 w-10 text-primary" />
+              )}
             </div>
             <span className="text-xl font-headline font-bold tracking-tight uppercase">Guruphoria</span>
           </Link>
           
           <nav className="hidden items-center gap-8 text-sm font-medium lg:flex text-muted-foreground">
             <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-            <Link href="/learn" className="hover:text-primary transition-colors">Learn</Link>
-            <Link href="/projects" className="hover:text-primary transition-colors">Projects</Link>
-            <Link href="/resources" className="hover:text-primary transition-colors">Resources</Link>
+            <Link href="/courses" className="hover:text-primary transition-colors">Learn</Link>
+            <Link href="#" className="hover:text-primary transition-colors">Projects</Link>
+            <Link href="#" className="hover:text-primary transition-colors">Resources</Link>
             <Link href="/about" className="hover:text-primary transition-colors">About</Link>
-            <Link href="/contact" className="hover:text-primary transition-colors">Contact</Link>
+            <Link href="#" className="hover:text-primary transition-colors">Contact</Link>
           </nav>
         </div>
 

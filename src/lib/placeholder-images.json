@@ -3,13 +3,13 @@
     {
       "id": "brand-hero",
       "description": "Premium brand hero image for Guruphoria showing AI and software engineering themes",
-      "imageUrl": "https://picsum.photos/seed/guruphoria-hero/800/800",
+      "imageUrl": "/hero-bg.png",
       "imageHint": "futuristic technology"
     },
     {
       "id": "brand-logo",
       "description": "The official Guruphoria logo",
-      "imageUrl": "/logo.svg",
+      "imageUrl": "/logo.jpg",
       "imageHint": "brand logo"
     },
     {

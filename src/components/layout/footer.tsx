@@ -1,16 +1,33 @@
+
 import Link from 'next/link';
+import Image from 'next/image';
 import { Github, Youtube, Newspaper, Twitter, Linkedin } from 'lucide-react';
 import { GuruphoriaLogo } from './logo';
+import { getPlaceholderImage } from '@/lib/placeholder-images';
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const brandLogo = getPlaceholderImage('brand-logo');
+
   return (
     <footer className="border-t border-white/5 bg-background pt-20 pb-10">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="space-y-6">
             <Link href="/" className="flex items-center gap-2" prefetch={false}>
-              <GuruphoriaLogo className="h-10 w-10 text-primary" />
+              <div className="bg-primary/20 p-1 rounded-lg overflow-hidden">
+                {brandLogo ? (
+                  <Image 
+                    src={brandLogo.imageUrl} 
+                    alt="Guruphoria" 
+                    width={40} 
+                    height={40} 
+                    className="h-10 w-10 object-contain rounded"
+                  />
+                ) : (
+                  <GuruphoriaLogo className="h-10 w-10 text-primary" />
+                )}
+              </div>
               <span className="text-2xl font-headline font-bold uppercase">Guruphoria</span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
@@ -28,7 +45,7 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-6">Learning</h4>
             <ul className="space-y-4 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-primary transition-colors">AI Engineering</Link></li>
+              <li><Link href="/courses" className="hover:text-primary transition-colors">AI Engineering</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">LLM Development</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">React & Next.js</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Firebase Mastery</Link></li>
