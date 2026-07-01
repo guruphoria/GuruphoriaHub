@@ -23,7 +23,7 @@
     --border: 222 47% 20%;
     --input: 222 47% 20%;
     --ring: 202 100% 53%;
-    --radius: 0.75rem;
+    --radius: 1rem;
   }
 }
 
@@ -48,8 +48,12 @@
   @apply bg-card/60 backdrop-blur-xl border border-white/10;
 }
 
+.glass-dark {
+  @apply bg-black/40 backdrop-blur-xl border border-white/5;
+}
+
 .neon-glow {
-  box-shadow: 0 0 20px rgba(14, 165, 255, 0.3);
+  box-shadow: 0 0 20px rgba(14, 165, 255, 0.2);
 }
 
 .text-gradient {
@@ -58,10 +62,27 @@
 
 @keyframes float {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-12px); }
   100% { transform: translateY(0px); }
 }
 
 .animate-float {
-  animation: float 6s ease-in-out infinite;
+  animation: float 8s ease-in-out infinite;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full hover:bg-primary/50 transition-colors;
 }
