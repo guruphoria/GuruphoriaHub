@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Github, Youtube, Newspaper, Twitter, Linkedin, Mail, ExternalLink, Globe, ChevronRight } from 'lucide-react';
+import { Github, Youtube, Newspaper, Twitter, Linkedin, Mail, ExternalLink, Globe, ChevronRight, ArrowRight } from 'lucide-react';
 import { GuruphoriaLogo } from './logo';
 import { getPlaceholderImage } from '@/lib/placeholder-images';
 
@@ -81,7 +81,7 @@ export function Footer() {
               {footerLinks.learning.map((link) => (
                 <li key={link.name}>
                   <Link href={link.href} className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group">
-                    {link.name} <ArrowRight className="h-3 w-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    {link.name} <ArrowRightIcon className="h-3 w-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                   </Link>
                 </li>
               ))}
@@ -150,7 +150,7 @@ export function Footer() {
   );
 }
 
-const ArrowRight = ({ className }: { className?: string }) => (
+const ArrowRightIcon = ({ className }: { className?: string }) => (
   <svg className={className} width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M4.5 9L7.5 6L4.5 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
