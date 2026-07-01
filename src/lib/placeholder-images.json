@@ -1,34 +1,34 @@
 {
   "placeholderImages": [
     {
-      "id": "hero-image",
-      "description": "A person learning on a laptop with a creative background",
-      "imageUrl": "https://images.unsplash.com/photo-1673515324976-edc94ae391f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxsZWFybmluZyUyMGxhcHRvcHxlbnwwfHx8fDE3NjE0MTkwMjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "learning laptop"
+      "id": "hero-developer",
+      "description": "Premium portrait of a developer with futuristic AI overlays",
+      "imageUrl": "https://picsum.photos/seed/guruhero/800/800",
+      "imageHint": "tech developer"
     },
     {
-      "id": "team-member-1",
-      "description": "Avatar for team member Alex Johnson",
-      "imageUrl": "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjEzMjQyNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "person portrait"
+      "id": "project-ai-chatbot",
+      "description": "AI Chatbot interface visualization",
+      "imageUrl": "https://picsum.photos/seed/aichat/600/400",
+      "imageHint": "ai interface"
     },
     {
-      "id": "team-member-2",
-      "description": "Avatar for team member Maria Garcia",
-      "imageUrl": "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjEzMjQyNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "person portrait"
+      "id": "project-resume-analyzer",
+      "description": "Resume analyzer tool dashboard",
+      "imageUrl": "https://picsum.photos/seed/resume/600/400",
+      "imageHint": "data analysis"
     },
     {
-      "id": "team-member-3",
-      "description": "Avatar for team member Chris Lee",
-      "imageUrl": "https://images.unsplash.com/photo-1521119989659-a83eee488004?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cGVyc29uJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzYxMzI0MjQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "person portrait"
+      "id": "article-ai-trends",
+      "description": "Futuristic AI trends visualization",
+      "imageUrl": "https://picsum.photos/seed/aitrends/600/400",
+      "imageHint": "artificial intelligence"
     },
     {
-      "id": "course-thumbnail-placeholder",
-      "description": "Placeholder for a course thumbnail",
-      "imageUrl": "https://images.unsplash.com/photo-1559526324-c1f275fbfa32?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjb3Vyc2UlMjB0aHVtYm5haWx8ZW58MHx8fHwxNzYxNDIyNDU0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "course thumbnail"
+      "id": "video-nextjs-ai",
+      "description": "Next.js and AI tutorial thumbnail",
+      "imageUrl": "https://picsum.photos/seed/nextai/600/400",
+      "imageHint": "coding tutorial"
     }
   ]
 }

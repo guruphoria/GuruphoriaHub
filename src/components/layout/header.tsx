@@ -1,113 +1,62 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { GraduationCap, LogOut } from 'lucide-react';
-import { useUser, useAuth } from '@/firebase';
-import { signOut } from 'firebase/auth';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { GraduationCap, Github, Youtube, Newspaper, Search, Menu } from 'lucide-react';
+import { useUser } from '@/firebase';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useRouter } from 'next/navigation';
 
 export function Header() {
   const { user, isUserLoading } = useUser();
-  const auth = useAuth();
-  const router = useRouter();
-
-  const handleSignOut = async () => {
-    if (auth) {
-      await signOut(auth);
-      router.push('/');
-    }
-  };
-
-  const getInitials = (name?: string | null) => {
-    if (!name) return 'U';
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('');
-  };
 
   return (
-    <header className="bg-background/95 sticky top-0 z-50 w-full border-b backdrop-blur-sm">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="flex items-center gap-2" prefetch={false}>
-          <GraduationCap className="h-7 w-7 text-primary" />
-          <span className="text-xl font-headline font-bold">Guruphoria</span>
-        </Link>
-        <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
-          <Link
-            href="/courses"
-            className="text-foreground/60 transition-colors hover:text-foreground/80"
-            prefetch={false}
-          >
-            Courses
+    <header className="bg-background/80 sticky top-0 z-50 w-full border-b border-white/5 backdrop-blur-md">
+      <div className="container mx-auto flex h-20 items-center justify-between px-6">
+        <div className="flex items-center gap-10">
+          <Link href="/" className="flex items-center gap-2 group" prefetch={false}>
+            <div className="bg-primary/20 p-1.5 rounded-lg group-hover:bg-primary/30 transition-colors">
+              <GraduationCap className="h-6 w-6 text-primary" />
+            </div>
+            <span className="text-xl font-headline font-bold tracking-tight">Guruphoria</span>
           </Link>
-          <Link
-            href="/about"
-            className="text-foreground/60 transition-colors hover:text-foreground/80"
-            prefetch={false}
-          >
-            About
-          </Link>
+          
+          <nav className="hidden items-center gap-8 text-sm font-medium lg:flex text-muted-foreground">
+            <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+            <Link href="/learn" className="hover:text-primary transition-colors">Learn</Link>
+            <Link href="/projects" className="hover:text-primary transition-colors">Projects</Link>
+            <Link href="/resources" className="hover:text-primary transition-colors">Resources</Link>
+            <Link href="/about" className="hover:text-primary transition-colors">About</Link>
+            <Link href="/contact" className="hover:text-primary transition-colors">Contact</Link>
+          </nav>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-white">
+            <Search className="h-5 w-5" />
+          </Button>
+          <div className="hidden md:flex items-center gap-2 border-l border-white/10 pl-3">
+            <Button variant="ghost" size="icon" asChild className="text-muted-foreground hover:text-white">
+              <Link href="https://github.com/PuneetShivaay" target="_blank"><Github className="h-5 w-5" /></Link>
+            </Button>
+            <Button variant="ghost" size="icon" asChild className="text-muted-foreground hover:text-white">
+              <Link href="#" target="_blank"><Newspaper className="h-5 w-5" /></Link>
+            </Button>
+            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6 font-semibold hidden lg:flex">
+              <Youtube className="mr-2 h-4 w-4" /> Subscribe
+            </Button>
+          </div>
+          
           {user && (
-            <Link
-              href="/admin"
-              className="text-foreground/60 transition-colors hover:text-foreground/80"
-              prefetch={false}
-            >
-              Admin
+            <Link href="/admin">
+              <Avatar className="h-9 w-9 border border-primary/20">
+                <AvatarImage src={user.photoURL ?? ''} />
+                <AvatarFallback className="bg-primary/10 text-primary">{user.displayName?.[0] || 'G'}</AvatarFallback>
+              </Avatar>
             </Link>
           )}
-        </nav>
-        <div className="flex items-center gap-4">
-          {isUserLoading ? (
-             <div className="h-9 w-20 animate-pulse rounded-md bg-muted" />
-          ) : user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <Avatar className="h-9 w-9">
-                    <AvatarImage
-                      src={user.photoURL ?? ''}
-                      alt={user.displayName ?? 'User'}
-                    />
-                    <AvatarFallback>
-                      {getInitials(user.displayName)}
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end" forceMount>
-                <DropdownMenuLabel className="font-normal">
-                  <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none">
-                      {user.displayName}
-                    </p>
-                    <p className="text-xs leading-none text-muted-foreground">
-                      {user.email}
-                    </p>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleSignOut}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Button asChild variant="outline">
-              <Link href="/login">Sign In</Link>
-            </Button>
-          )}
+          
+          <Button variant="ghost" size="icon" className="lg:hidden text-muted-foreground">
+            <Menu className="h-6 w-6" />
+          </Button>
         </div>
       </div>
     </header>
