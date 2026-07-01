@@ -7,7 +7,7 @@ export default function LoginPage() {
     <div className="container mx-auto px-4 py-32 text-center">
       <h1 className="text-4xl font-headline font-bold mb-4">Login Disabled</h1>
       <p className="text-muted-foreground mb-8">Authentication is currently restricted.</p>
-      <Button asChild rounded-full>
+      <Button asChild className="rounded-full">
         <Link href="/">Return to Home</Link>
       </Button>
     </div>

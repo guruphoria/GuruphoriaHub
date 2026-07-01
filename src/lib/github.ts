@@ -8,10 +8,17 @@ const GITHUB_USERNAME = 'PuneetShivaay';
  */
 export async function fetchGitHubRepositories(limit = 6): Promise<GitHubRepository[]> {
   try {
-    const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=stars&per_page=${limit}`);
+    // GitHub API requires a User-Agent header
+    const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=stars&per_page=${limit}`, {
+      headers: {
+        'User-Agent': 'Guruphoria-App',
+        'Accept': 'application/vnd.github.v3+json'
+      },
+      next: { revalidate: 3600 } // Cache for 1 hour
+    });
     
     if (!response.ok) {
-      throw new Error('GitHub API request failed');
+      throw new Error(`GitHub API request failed: ${response.status}`);
     }
 
     const data = await response.json();

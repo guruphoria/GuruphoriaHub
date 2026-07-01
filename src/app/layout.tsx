@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://guruphoria.com'),
   title: {
     default: 'Guruphoria | Master AI & Software Engineering',
     template: '%s | Guruphoria'
