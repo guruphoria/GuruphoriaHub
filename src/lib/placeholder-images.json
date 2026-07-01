@@ -7,6 +7,12 @@
       "imageHint": "futuristic technology"
     },
     {
+      "id": "brand-logo",
+      "description": "The official Guruphoria logo",
+      "imageUrl": "/logo.svg",
+      "imageHint": "brand logo"
+    },
+    {
       "id": "hero-developer",
       "description": "Premium portrait of a developer with futuristic AI overlays",
       "imageUrl": "https://picsum.photos/seed/guruhero/800/800",
