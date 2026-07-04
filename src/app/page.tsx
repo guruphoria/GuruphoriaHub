@@ -83,36 +83,42 @@ export default function Home() {
     <div className="flex flex-col overflow-hidden bg-[#050816]">
       {/* Hero Section */}
       <section className="relative w-full pt-20 pb-16 lg:pt-36 lg:pb-32 overflow-hidden">
+        {/* Premium Gradient Background */}
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,_rgba(14,165,255,0.15),transparent_50%),radial-gradient(circle_at_80%_70%,_rgba(14,165,255,0.1),transparent_50%)] pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] from-primary/10 to-transparent pointer-events-none" />
+        
         <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
-          <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
+          <div className="space-y-8 lg:space-y-10 text-center lg:text-left">
             <Badge variant="outline" className="border-primary/30 text-primary py-1.5 px-6 text-xs sm:text-sm glass uppercase tracking-[0.2em] font-bold">
               ✨ Redefining Tech Education
             </Badge>
             <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-headline font-extrabold leading-[1.1] sm:leading-[1.05]">
-              Master <span className="text-gradient">AI.</span><br />
+              Master AI.<br />
               Build Software.
             </h1>
             <p className="max-w-xl text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed mx-auto lg:mx-0">
-              Helping developers and students master Agentic AI, LLM Engineering, and Modern Full-Stack Development through elite, project-based labs.
+              Guruphoria is a premier educational laboratory dedicated to building the architects of tomorrow. We empower students and developers to master the complete technological stack—from Artificial Intelligence and Software Engineering to Automation, Cloud, and Web Development—through rigorous, practical learning that translates directly to real-world impact.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4 sm:pt-6">
               <Button asChild size="lg" className="bg-primary hover:bg-primary/90 rounded-full px-8 sm:px-10 text-base sm:text-lg font-bold transition-all hover:scale-105 neon-glow w-full sm:w-auto">
-                <Link href="https://www.youtube.com/@guruphoria" target="_blank">
-                  <Youtube className="mr-2 h-5 w-5" /> Watch Tutorials
+                <Link href="/courses">
+                  Start Learning
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="rounded-full px-8 sm:px-10 text-base sm:text-lg font-bold glass hover:bg-white/5 border-white/10 transition-all w-full sm:w-auto">
-                <Link href="/courses">
-                  Browse Labs <ArrowRight className="ml-2 h-5 w-5" />
+                <Link href="/explore">
+                  Explore Learning Paths <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
             </div>
           </div>
           
           <div className="relative group perspective-1000 hidden lg:block">
-            <div className="absolute -inset-4 bg-primary/20 rounded-full blur-[120px] group-hover:bg-primary/30 transition duration-1000"></div>
-            <div className="relative glass rounded-[2rem] p-4 overflow-hidden animate-float border-white/10 shadow-2xl">
+            {/* Subtle Animated Glow behind image */}
+            <div className="absolute -inset-8 bg-primary/20 rounded-full blur-[140px] animate-pulse group-hover:bg-primary/30 transition duration-1000"></div>
+            
+            {/* Image container with soft floating animation */}
+            <div className="relative glass rounded-[2rem] p-4 overflow-hidden animate-float border-white/10 shadow-2xl transition-all duration-700 hover:rotate-1">
               {heroImage && (
                 <Image
                   src={heroImage.imageUrl}
