@@ -52,8 +52,8 @@ export default function Home() {
     async function loadData() {
       const [latestVideos, latestArticles, latestRepos] = await Promise.all([
         fetchLatestVideos(2),
-        fetchLatestArticles(2),
-        fetchGitHubRepositories(3)
+        fetchLatestArticles(3),
+        fetchGitHubRepositories(4)
       ]);
       setVideos(latestVideos);
       setArticles(latestArticles);
@@ -84,7 +84,6 @@ export default function Home() {
     <div className="flex flex-col overflow-hidden bg-[#050816]">
       {/* Hero Section */}
       <section className="relative w-full pt-20 pb-16 lg:pt-36 lg:pb-32 overflow-hidden reveal-section">
-        {/* Premium Gradient Background */}
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,_rgba(14,165,255,0.15),transparent_50%),radial-gradient(circle_at_80%_70%,_rgba(14,165,255,0.1),transparent_50%)] pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(14,165,255,0.1)_0%,_transparent_70%)] from-primary/10 to-transparent pointer-events-none" />
         
@@ -115,10 +114,8 @@ export default function Home() {
           </div>
           
           <div className="relative group perspective-1000 hidden lg:block animate-in fade-in zoom-in-95 duration-1000 delay-400">
-            {/* Subtle Animated Glow behind image */}
             <div className="absolute -inset-8 bg-primary/20 rounded-full blur-[140px] animate-pulse group-hover:bg-primary/30 transition duration-1000"></div>
             
-            {/* Image container with soft floating animation */}
             <div className="relative glass rounded-[2rem] p-4 overflow-hidden animate-float border-white/10 shadow-2xl transition-all duration-700 hover:rotate-1 hover:shadow-primary/20">
               {creatorImage && (
                 <Image
@@ -204,9 +201,75 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Latest Labs (Redesigned: Premium Repository Style) */}
+      <section className="w-full py-20 sm:py-32 bg-[#050816] reveal-section">
+        <div className="container mx-auto px-6">
+          <div className="flex items-center justify-between mb-12 sm:mb-16">
+            <div className="space-y-2">
+              <h2 className="text-3xl sm:text-4xl font-bold flex items-center gap-3">
+                <Terminal className="text-primary h-8 w-8" /> Latest Labs
+              </h2>
+              <p className="text-muted-foreground text-sm sm:text-base">Production-grade projects and experimental frameworks.</p>
+            </div>
+            <Button asChild variant="ghost" className="text-xs sm:text-sm font-bold text-muted-foreground hover:text-primary transition-all">
+              <Link href="https://github.com/PuneetShivaay" target="_blank">View GitHub</Link>
+            </Button>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            {isLoadingRepos ? (
+              Array.from({ length: 4 }).map((_, i) => (
+                <Card key={i} className="glass p-8 bg-[#101828]/50 border-white/5 animate-pulse h-64" />
+              ))
+            ) : (
+              repos.map((repo) => (
+                <Card key={repo.name} className="glass p-6 sm:p-8 group hover:border-primary/50 transition-all duration-500 bg-[#101828]/50 border-white/5 hover:-translate-y-2 hover:shadow-[0_0_40px_rgba(14,165,255,0.1)] relative overflow-hidden">
+                  <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <Code2 className="h-24 w-24" />
+                  </div>
+                  
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="bg-primary/10 p-2 rounded-lg text-primary">
+                          <Terminal className="h-5 w-5" />
+                        </div>
+                        <h3 className="text-xl sm:text-2xl font-bold tracking-tight group-hover:text-primary transition-colors">{repo.name}</h3>
+                      </div>
+                      <Badge variant="outline" className="text-[10px] border-white/10 text-muted-foreground font-bold px-3">Public</Badge>
+                    </div>
+                    
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-6 line-clamp-2 max-w-[90%]">{repo.description}</p>
+                    
+                    <div className="flex flex-wrap gap-4 mt-auto">
+                      <div className="flex items-center gap-2 text-xs font-medium text-white/60">
+                        <span className="w-2.5 h-2.5 rounded-full bg-primary" /> {repo.language}
+                      </div>
+                      <div className="flex items-center gap-2 text-xs font-medium text-white/60">
+                        <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" /> {repo.stars}
+                      </div>
+                      <div className="flex items-center gap-2 text-xs font-medium text-white/60">
+                        <GitFork className="h-4 w-4" /> {repo.forks}
+                      </div>
+                      <div className="flex items-center gap-2 text-xs font-medium text-white/40 ml-auto">
+                        <Calendar className="h-3.5 w-3.5" /> Updated {repo.updatedAt}
+                      </div>
+                    </div>
+                    
+                    <Button asChild variant="outline" size="sm" className="mt-8 w-full glass border-white/10 hover:bg-primary hover:text-white hover:border-primary rounded-full font-bold transition-all">
+                      <Link href={repo.url} target="_blank">Explore Project <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                    </Button>
+                  </div>
+                </Card>
+              ))
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* Our Story Section */}
       <section className="py-20 sm:py-32 bg-[#101828]/20 relative overflow-hidden reveal-section">
-        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="container mx-auto px-6">
           <div className="glass rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-8 lg:p-16 border-white/5 bg-gradient-to-br from-[#101828]/60 to-transparent">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -276,169 +339,54 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Content Sections (Latest Videos & Articles) */}
-      <section className="w-full py-16 sm:py-24 bg-[#050816] reveal-section">
+      {/* Engineering Blog (Redesigned: Clean Typography Focus) */}
+      <section className="w-full py-20 sm:py-32 bg-[#050816] reveal-section">
         <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
-            {/* YouTube Section */}
-            <div className="space-y-8">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
-                  <Youtube className="text-[#EA3323] h-6 w-6 sm:h-8 sm:w-8 animate-pulse" /> Latest Labs
-                </h2>
-                <Button asChild variant="ghost" className="text-xs sm:text-sm font-bold text-muted-foreground hover:text-primary transition-all hover:scale-105">
-                  <Link href="https://www.youtube.com/@guruphoria" target="_blank">View Channel</Link>
-                </Button>
-              </div>
-              <div className="grid gap-6">
-                {isLoadingVideos ? (
-                  Array.from({ length: 2 }).map((_, i) => (
-                    <Card key={i} className="glass overflow-hidden bg-[#101828]/50 border-white/5 animate-pulse">
-                      <div className="aspect-video bg-white/5" />
-                      <div className="p-6 space-y-3">
-                        <div className="h-6 bg-white/5 rounded w-3/4" />
-                        <div className="h-4 bg-white/5 rounded w-1/2" />
-                      </div>
-                    </Card>
-                  ))
-                ) : (
-                  videos.map((video) => (
-                    <Card key={video.id} className="glass overflow-hidden group bg-[#101828]/50 border-white/5 hover:border-primary/30 hover:-translate-y-1 hover:shadow-primary/10 transition-all duration-500">
-                      <div className="relative aspect-video overflow-hidden">
-                        <Image 
-                          src={video.thumbnail} 
-                          alt={video.title} 
-                          fill 
-                          className="object-cover group-hover:scale-110 transition-transform duration-700"
-                          data-ai-hint="programming code"
-                        />
-                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/0 transition-colors"></div>
-                        <div className="absolute bottom-4 right-4 bg-black/80 px-2 py-1 rounded text-[10px] font-bold border border-white/10 group-hover:bg-primary group-hover:text-white transition-colors">{video.duration}</div>
-                      </div>
-                      <div className="p-4 sm:p-6 space-y-3">
-                        <h4 className="font-bold text-base sm:text-lg line-clamp-2 group-hover:text-primary transition-colors leading-snug">{video.title}</h4>
-                        <div className="flex items-center gap-4 text-[10px] sm:text-xs text-muted-foreground font-medium">
-                          <span className="flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5" /> {video.publishedAt}</span>
-                          <span>{video.viewCount} views</span>
-                        </div>
-                        <Button asChild variant="outline" size="sm" className="w-full mt-2 glass border-white/10 hover:bg-white/5 hover:border-primary/50 font-bold rounded-full transition-all hover:scale-[1.02]">
-                          <Link href={video.videoUrl} target="_blank">Watch Now</Link>
-                        </Button>
-                      </div>
-                    </Card>
-                  ))
-                )}
-              </div>
+          <div className="flex items-center justify-between mb-12 sm:mb-16">
+            <div className="space-y-2">
+              <h2 className="text-3xl sm:text-4xl font-bold flex items-center gap-3">
+                <BookOpen className="text-primary h-8 w-8" /> Engineering Blog
+              </h2>
+              <p className="text-muted-foreground text-sm sm:text-base">Technical deep dives and software architecture insights.</p>
             </div>
-
-            {/* Articles Section */}
-            <div className="space-y-8">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
-                  <BookOpen className="text-primary h-6 w-6 sm:h-8 sm:w-8 animate-bounce duration-[2000ms]" /> Engineering Blog
-                </h2>
-                <Button asChild variant="ghost" className="text-xs sm:text-sm font-bold text-muted-foreground hover:text-primary transition-all hover:scale-105">
-                  <Link href="https://puneetshivaay.medium.com/" target="_blank">Read All Stories</Link>
-                </Button>
-              </div>
-              <div className="grid gap-6">
-                {isLoadingArticles ? (
-                  Array.from({ length: 2 }).map((_, i) => (
-                    <Card key={i} className="glass p-6 flex gap-6 bg-[#101828]/50 border-white/5 animate-pulse">
-                      <div className="w-32 h-32 bg-white/5 rounded-xl shrink-0" />
-                      <div className="space-y-3 flex-grow">
-                        <div className="h-4 bg-white/5 rounded w-1/4" />
-                        <div className="h-6 bg-white/5 rounded w-3/4" />
-                        <div className="h-4 bg-white/5 rounded w-1/2" />
-                      </div>
-                    </Card>
-                  ))
-                ) : (
-                  articles.map((article) => (
-                    <Card key={article.id} className="glass p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-6 group bg-[#101828]/50 border-white/5 hover:border-primary/30 hover:-translate-y-1 hover:shadow-primary/10 transition-all duration-500">
-                      <div className="relative w-full sm:w-32 h-40 sm:h-32 rounded-xl overflow-hidden shrink-0 border border-white/5">
-                        <Image 
-                          src={article.coverImage} 
-                          alt={article.title} 
-                          fill 
-                          className="object-cover group-hover:scale-110 transition-transform duration-700"
-                          data-ai-hint="software architecture"
-                        />
-                      </div>
-                      <div className="space-y-3 flex-grow flex flex-col">
-                        <Badge variant="secondary" className="bg-primary/10 text-primary border-none text-[10px] uppercase font-bold w-fit px-3 transition-colors group-hover:bg-primary group-hover:text-white">
-                          {article.category}
-                        </Badge>
-                        <h4 className="font-bold text-lg sm:text-xl group-hover:text-primary transition-colors leading-tight line-clamp-2">
-                          {article.title}
-                        </h4>
-                        <div className="flex items-center justify-between mt-auto pt-2">
-                          <div className="flex items-center gap-4 text-[10px] text-muted-foreground font-medium">
-                            <span>{article.readingTime} read</span>
-                            <span>{article.publishedAt}</span>
-                          </div>
-                          <Button asChild variant="link" className="p-0 h-auto text-primary font-bold hover:no-underline text-xs">
-                            <Link href={article.url} target="_blank" className="flex items-center gap-1 group/btn transition-all">
-                              Read Article <ChevronRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                            </Link>
-                          </Button>
-                        </div>
-                      </div>
-                    </Card>
-                  ))
-                )}
-              </div>
-            </div>
+            <Button asChild variant="ghost" className="text-xs sm:text-sm font-bold text-muted-foreground hover:text-primary transition-all">
+              <Link href="https://puneetshivaay.medium.com/" target="_blank">Read All Stories</Link>
+            </Button>
           </div>
-        </div>
-      </section>
-
-      {/* GitHub Projects Section */}
-      <section className="w-full py-16 sm:py-24 bg-[#101828]/30 reveal-section">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12 sm:mb-16 space-y-4">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">Open Source <span className="text-primary">Labs</span></h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-base sm:text-lg">Production-grade tools and experimental AI frameworks available for everyone.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {isLoadingRepos ? (
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {isLoadingArticles ? (
               Array.from({ length: 3 }).map((_, i) => (
-                <Card key={i} className="glass p-8 bg-[#101828]/50 border-white/5 animate-pulse">
-                  <div className="w-12 h-12 rounded-xl bg-white/5 mb-6" />
-                  <div className="h-8 bg-white/5 rounded w-3/4 mb-4" />
-                  <div className="h-4 bg-white/5 rounded w-full mb-8" />
-                  <div className="flex gap-4">
-                    <div className="flex-1 h-10 bg-white/5 rounded" />
-                    <div className="flex-1 h-10 bg-white/5 rounded" />
-                  </div>
-                </Card>
+                <Card key={i} className="glass p-8 bg-[#101828]/50 border-white/5 animate-pulse h-48" />
               ))
             ) : (
-              repos.map((repo) => (
-                <Card key={repo.name} className="glass p-6 sm:p-8 group hover:border-primary/50 transition-all duration-500 bg-[#101828]/50 border-white/5 hover:-translate-y-2 hover:shadow-primary/10">
-                  <div className="bg-primary/10 w-12 h-12 rounded-xl flex items-center justify-center text-primary mb-6 transition-transform group-hover:rotate-6 group-hover:scale-110">
-                    <Code2 className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-bold mb-4 line-clamp-1 group-hover:text-primary transition-colors">{repo.name}</h3>
-                  <p className="text-muted-foreground text-xs sm:text-sm mb-6 line-clamp-2 leading-relaxed">{repo.description}</p>
-                  <div className="flex flex-wrap gap-3 sm:gap-4 mb-8">
-                    <Badge variant="outline" className="text-[10px] border-white/10 text-muted-foreground font-bold px-3 transition-colors group-hover:border-primary/30 group-hover:text-white">{repo.language}</Badge>
-                    <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-muted-foreground font-medium group-hover:text-white transition-colors">
-                      <Star className="h-3.5 w-3.5 text-yellow-500 fill-yellow-500" /> {repo.stars}
+              articles.map((article) => (
+                <Card key={article.id} className="glass p-6 sm:p-8 group hover:border-primary/30 transition-all duration-500 bg-[#101828]/50 border-white/5 hover:-translate-y-2 flex flex-col h-full border-l-4 border-l-transparent hover:border-l-primary">
+                  <div className="space-y-6 flex flex-col h-full">
+                    <div className="flex items-center justify-between">
+                      <Badge variant="secondary" className="bg-primary/10 text-primary border-none text-[10px] uppercase font-black tracking-widest px-3 py-1">
+                        {article.category || "Engineering"}
+                      </Badge>
+                      <div className="flex items-center gap-2 text-[10px] text-muted-foreground font-bold">
+                        <Calendar className="h-3 w-3" /> {article.publishedAt}
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-muted-foreground font-medium group-hover:text-white transition-colors">
-                      <GitFork className="h-3.5 w-3.5" /> {repo.forks}
+                    
+                    <div className="space-y-3 flex-grow">
+                      <h4 className="text-xl sm:text-2xl font-bold group-hover:text-primary transition-colors leading-tight line-clamp-2">
+                        {article.title}
+                      </h4>
+                      <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2 font-medium opacity-80">
+                        {article.summary}
+                      </p>
                     </div>
-                  </div>
-                  <div className="flex gap-3 sm:gap-4">
-                    <Button asChild variant="outline" size="sm" className="flex-1 glass border-white/10 hover:bg-white/5 hover:border-primary/50 font-bold rounded-full text-xs transition-all hover:scale-[1.05]">
-                      <Link href={repo.url} target="_blank">
-                        <Github className="mr-2 h-4 w-4" /> Code
+                    
+                    <div className="flex items-center justify-between pt-6 border-t border-white/5">
+                      <span className="text-[11px] font-bold text-white/40 uppercase tracking-widest">{article.readingTime} Read</span>
+                      <Link href={article.url} target="_blank" className="text-xs font-bold text-primary flex items-center gap-1 group/link">
+                        Read Article <ChevronRight className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
                       </Link>
-                    </Button>
-                    <Button size="sm" className="flex-1 bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 font-bold rounded-full text-xs transition-all hover:scale-[1.05]">
-                      <ExternalLink className="mr-2 h-4 w-4" /> Demo
-                    </Button>
+                    </div>
                   </div>
                 </Card>
               ))
