@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -45,8 +44,8 @@ export default function ProjectsPage() {
 
   useEffect(() => {
     async function loadData() {
-      const latestRepos = await fetchGitHubRepositories(6);
-      setRepos(latestRepos);
+      const featuredRepos = await fetchGitHubRepositories();
+      setRepos(featuredRepos);
       setIsLoadingRepos(false);
     }
     loadData();
@@ -358,7 +357,7 @@ export default function ProjectsPage() {
           <Card className="glass p-12 lg:p-20 relative overflow-hidden text-center max-w-4xl mx-auto rounded-[3rem] bg-[#101828]/60 border-white/10">
             <div className="relative z-10 space-y-8">
               <div className="inline-flex p-4 rounded-2xl bg-primary/10 text-primary mb-4">
-                <Zap className="h-8 w-8" />
+                <Send className="h-8 w-8" />
               </div>
               <h2 className="text-4xl font-bold leading-tight">Never Miss a New Project</h2>
               <p className="text-muted-foreground text-lg">Receive updates whenever a new open-source repository or project lab is published.</p>

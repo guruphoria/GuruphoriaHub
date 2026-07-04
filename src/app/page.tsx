@@ -48,25 +48,16 @@ export default function Home() {
   const [isLoadingArticles, setIsLoadingArticles] = useState(true);
   const [isLoadingRepos, setIsLoadingRepos] = useState(true);
 
-  // Configurable featured repositories list
-  const featuredRepositories = ["AI-Engineering", "MohakTheVibe", "Otical-SST", "guruphoria-ai-starter", "mcp-server-demo", "firebase-saas-template"];
-
   useEffect(() => {
     async function loadData() {
-      const [latestVideos, latestArticles, allRepos] = await Promise.all([
+      const [latestVideos, latestArticles, featuredRepos] = await Promise.all([
         fetchLatestVideos(2),
         fetchLatestArticles(3),
-        fetchGitHubRepositories(10)
+        fetchGitHubRepositories()
       ]);
       setVideos(latestVideos);
       setArticles(latestArticles);
-      
-      // Filter repos based on featured list or just show the best if list is empty
-      const filtered = allRepos.filter(r => 
-        featuredRepositories.some(name => r.name.toLowerCase().includes(name.toLowerCase()))
-      );
-      
-      setRepos(filtered.length > 0 ? filtered.slice(0, 6) : allRepos.slice(0, 6));
+      setRepos(featuredRepos);
       
       setIsLoadingVideos(false);
       setIsLoadingArticles(false);
