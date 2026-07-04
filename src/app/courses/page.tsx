@@ -1,5 +1,5 @@
 'use client';
-import { CourseCard } from '@/components/course-card';
+import { CourseCard } from '@/components/cards/course-card';
 import { useCollection, useFirestore, useMemoFirebase } from '@/firebase';
 import type { Course } from '@/lib/types';
 import { collection } from 'firebase/firestore';
