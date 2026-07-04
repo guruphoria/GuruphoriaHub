@@ -15,7 +15,7 @@
     {
       "id": "hero-developer",
       "description": "Premium portrait of a developer with futuristic AI overlays",
-      "imageUrl": "https://picsum.photos/seed/guruhero/800/800",
+      "imageUrl": "/hero-bg.png",
       "imageHint": "tech developer"
     },
     {

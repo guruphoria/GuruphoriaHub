@@ -33,11 +33,13 @@ import {
   Boxes,
   Briefcase
 } from 'lucide-react';
-import { HeroSection } from '@/components/sections/home/HeroSection';
-import { WhyGuruphoriaSection } from '@/components/sections/home/WhyGuruphoriaSection';
-import { FeaturedTopicsSection } from '@/components/sections/home/FeaturedTopicsSection';
-import { PremiumNewsletterSection } from '@/components/sections/home/PremiumNewsletterSection';
-import { OurStorySection } from '@/components/sections/home/OurStorySection';
+import {
+  HeroSection,
+  WhyGuruphoriaSection,
+  FeaturedTopicsSection,
+  PremiumNewsletterSection,
+  OurStorySection,
+} from '@/components/sections/home';
 
 export default function Home() {
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
