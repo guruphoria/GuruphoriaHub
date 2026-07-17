@@ -1,9 +1,10 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Github, Youtube, Newspaper, Search, Menu } from 'lucide-react';
+import { Github, Youtube, Newspaper, Search, Menu, Command } from 'lucide-react';
 import { GuruphoriaLogo } from './logo';
 import { getPlaceholderImage } from '@/lib/placeholder-images';
 import {
@@ -13,9 +14,19 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from '@/components/ui/input';
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
   const brandLogo = getPlaceholderImage('brand-logo');
 
   const navLinks = [
@@ -28,8 +39,28 @@ export function Header() {
     { name: 'Contact', href: '/contact' },
   ];
 
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setSearchOpen((open) => !open);
+      }
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
+
   const handleLinkClick = () => {
     setOpen(false);
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/explore?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchOpen(false);
+      setSearchQuery('');
+    }
   };
 
   return (
@@ -64,9 +95,15 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-white hidden sm:flex h-9 w-9 transition-all hover:scale-110 active:scale-95">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => setSearchOpen(true)}
+            className="text-muted-foreground hover:text-white flex h-9 w-9 transition-all hover:scale-110 active:scale-95"
+          >
             <Search className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
+          
           <div className="hidden md:flex items-center gap-1 border-l border-white/10 pl-2">
             <Button variant="ghost" size="icon" asChild className="text-muted-foreground hover:text-white h-9 w-9 transition-all hover:scale-110 active:scale-90 hover:bg-primary/10">
               <Link href="https://github.com/PuneetShivaay" target="_blank" rel="noopener noreferrer">
@@ -154,6 +191,36 @@ export function Header() {
           </Sheet>
         </div>
       </div>
+
+      <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
+        <DialogContent className="bg-[#101828] border-white/10 text-white max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Search className="h-5 w-5 text-primary" />
+              Global Search
+            </DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleSearchSubmit} className="space-y-4 pt-4">
+            <div className="relative group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
+              <Input 
+                autoFocus
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search across AI, React, Next.js, projects..."
+                className="bg-black/20 border-white/10 rounded-xl pl-12 py-6 text-lg focus:border-primary/50"
+              />
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-1.5 px-2 py-1 rounded bg-white/5 border border-white/10 text-[10px] text-muted-foreground font-bold">
+                <Command className="h-3 w-3" />
+                ENTER
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground px-1">
+              Search for tutorials, open source projects, articles, and more.
+            </p>
+          </form>
+        </DialogContent>
+      </Dialog>
     </header>
   );
 }

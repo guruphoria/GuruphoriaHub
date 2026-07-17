@@ -1,7 +1,7 @@
-
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -36,8 +36,10 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function ExplorePage() {
-  const [searchQuery, setSearchQuery] = useState('');
+function ExploreContent() {
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams.get('q') || '';
+  const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
   const [articles, setArticles] = useState<MediumArticle[]>([]);
   const [isLoadingVideos, setIsLoadingVideos] = useState(true);
@@ -56,6 +58,10 @@ export default function ExplorePage() {
     }
     loadData();
   }, []);
+
+  useEffect(() => {
+    setSearchQuery(initialQuery);
+  }, [initialQuery]);
 
   const categories = [
     { name: 'Artificial Intelligence', icon: '🤖' },
@@ -88,6 +94,11 @@ export default function ExplorePage() {
     { title: 'Full Stack Development', time: '16 Weeks', diff: 'Advanced', lessons: 60, progress: 0 },
   ];
 
+  const filteredVideos = videos.filter(v => 
+    v.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    v.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="flex flex-col bg-[#050816] text-white overflow-hidden min-h-screen">
       <section className="relative pt-32 pb-20 px-6">
@@ -119,7 +130,8 @@ export default function ExplorePage() {
             {categories.map((cat) => (
               <button 
                 key={cat.name} 
-                className="glass px-4 py-2 rounded-full text-sm font-medium border-white/5 hover:border-primary/50 hover:bg-white/5 transition-all flex items-center gap-2"
+                onClick={() => setSearchQuery(cat.name)}
+                className={`glass px-4 py-2 rounded-full text-sm font-medium border-white/5 hover:border-primary/50 hover:bg-white/5 transition-all flex items-center gap-2 ${searchQuery === cat.name ? 'border-primary bg-primary/10' : ''}`}
               >
                 <span>{cat.icon}</span> {cat.name}
               </button>
@@ -182,7 +194,7 @@ export default function ExplorePage() {
                 </Card>
               ))
             ) : (
-              videos.map((vid) => (
+              (searchQuery ? filteredVideos : videos).map((vid) => (
                 <Card key={vid.id} className="glass overflow-hidden group bg-[#101828]/50 border-white/5">
                   <div className="relative aspect-video">
                     <Image 
@@ -214,6 +226,11 @@ export default function ExplorePage() {
                   </div>
                 </Card>
               ))
+            )}
+            {searchQuery && filteredVideos.length === 0 && !isLoadingVideos && (
+              <div className="col-span-full py-20 text-center text-muted-foreground">
+                No videos found matching &quot;{searchQuery}&quot;
+              </div>
             )}
           </div>
         </div>
@@ -280,5 +297,13 @@ export default function ExplorePage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function ExplorePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#050816]" />}>
+      <ExploreContent />
+    </Suspense>
   );
 }
