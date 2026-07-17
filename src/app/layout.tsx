@@ -13,6 +13,10 @@ export const metadata: Metadata = {
   },
   description: 'Guruphoria is a premium learning platform for AI Engineering, LLMs, Agentic AI, React, Next.js, and Software Development. Built for engineers, by engineers.',
   keywords: ['AI Engineering', 'LLM Development', 'Agentic AI', 'Software Engineering', 'Next.js', 'React', 'Firebase', 'Puneet Shivaay'],
+  icons: {
+    icon: '/logo.jpg',
+    apple: '/logo.jpg',
+  },
   authors: [{ name: 'Puneet Shivaay' }],
   creator: 'Puneet Shivaay',
   publisher: 'Guruphoria',
