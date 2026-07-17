@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -14,6 +15,7 @@ import {
 } from "@/components/ui/sheet";
 
 export function Header() {
+  const [open, setOpen] = useState(false);
   const brandLogo = getPlaceholderImage('brand-logo');
 
   const navLinks = [
@@ -25,6 +27,10 @@ export function Header() {
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
   ];
+
+  const handleLinkClick = () => {
+    setOpen(false);
+  };
 
   return (
     <header className="bg-background/80 sticky top-0 z-50 w-full border-b border-white/5 backdrop-blur-md">
@@ -79,7 +85,7 @@ export function Header() {
             </Button>
           </div>
           
-          <Sheet>
+          <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="lg:hidden text-muted-foreground h-9 w-9 transition-transform active:scale-90">
                 <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -111,6 +117,7 @@ export function Header() {
                     <Link 
                       key={link.name} 
                       href={link.href} 
+                      onClick={handleLinkClick}
                       className="text-base sm:text-lg font-medium text-muted-foreground hover:text-primary transition-all border-b border-white/5 pb-2 hover:translate-x-2"
                     >
                       {link.name}
@@ -120,23 +127,23 @@ export function Header() {
                 <div className="pt-2 space-y-4">
                   <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Connect</p>
                   <div className="flex gap-3">
-                    <Button variant="outline" size="icon" asChild className="glass border-white/10 rounded-full h-9 w-9 transition-transform hover:scale-110 active:scale-90">
+                    <Button variant="outline" size="icon" asChild className="glass border-white/10 rounded-full h-9 w-9 transition-transform hover:scale-110 active:scale-90" onClick={handleLinkClick}>
                       <Link href="https://github.com/PuneetShivaay" target="_blank">
                         <Github className="h-4 w-4" />
                       </Link>
                     </Button>
-                    <Button variant="outline" size="icon" asChild className="glass border-white/10 rounded-full h-9 w-9 transition-transform hover:scale-110 active:scale-90">
+                    <Button variant="outline" size="icon" asChild className="glass border-white/10 rounded-full h-9 w-9 transition-transform hover:scale-110 active:scale-90" onClick={handleLinkClick}>
                       <Link href="https://puneetshivaay.medium.com/" target="_blank">
                         <Newspaper className="h-4 w-4" />
                       </Link>
                     </Button>
-                    <Button variant="outline" size="icon" asChild className="glass border-white/10 rounded-full h-9 w-9 transition-transform hover:scale-110 active:scale-90">
+                    <Button variant="outline" size="icon" asChild className="glass border-white/10 rounded-full h-9 w-9 transition-transform hover:scale-110 active:scale-90" onClick={handleLinkClick}>
                       <Link href="https://www.youtube.com/@guruphoria" target="_blank">
                         <Youtube className="h-4 w-4" />
                       </Link>
                     </Button>
                   </div>
-                  <Button asChild className="w-full bg-primary hover:bg-primary/90 rounded-full font-bold h-11 text-sm transition-all hover:scale-[1.02] active:scale-95 neon-glow">
+                  <Button asChild className="w-full bg-primary hover:bg-primary/90 rounded-full font-bold h-11 text-sm transition-all hover:scale-[1.02] active:scale-95 neon-glow" onClick={handleLinkClick}>
                     <Link href="https://www.youtube.com/@guruphoria" target="_blank">
                       <Youtube className="mr-2 h-4 w-4" /> Subscribe on YouTube
                     </Link>
